@@ -122,7 +122,7 @@ export default {
       const timePrayTo = today.toLocaleTimeString(('en-GB'), { hour: 'numeric', minute: 'numeric' })
       // const timePrayTo = '00:00'
       // console.log(timePrayTo)
-      // console.log('data besok', this.jadwalSholatBesok[0].times)
+      console.log('data besok', this.jadwalSholatBesok[0].times)
       let data = this.jadwalSholatHari[0].times
       let key = Object.getOwnPropertyNames(data).filter(prop => data[prop] >= timePrayTo)
       // console.log(key)

@@ -39,6 +39,7 @@ const actions = {
       .get(`https://api.pray.zone/v2/times/this_month.json?city=${rootState.ip.city}`)
       .then(result => {
         // commit perbulan, perhari
+        // console.log(result)
         commit('setJadwalBulan', result.data.results.datetime)
         commit('setJadwalHari', getDataJadwalsholatHari(result.data.results.datetime))
         commit('setJadwalBesok', getDataJadwalsholatBesok(result.data.results.datetime))

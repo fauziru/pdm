@@ -42,7 +42,7 @@ export default {
   },
   created () {
     this.getIP().then(response => {
-      if (response === 'success') {
+      if (response === 200) {
         this.getDataJadwalsholat()
       }
     }).catch(error => {

@@ -23,11 +23,12 @@ const actions = {
   getIP ({commit}) {
     return new Promise((resolve, reject) => {
       axios
-        .get('http://ip-api.com/json')
+        .get('https://ipapi.co/json/')
         .then(result => {
-          commit('setIP', result.data.query)
+          // console.log(result)
+          commit('setIP', result.data.ip)
           commit('setCity', result.data.city)
-          resolve(result.data.status)
+          resolve(result.status)
         }).catch((error) => {
           reject(error)
           commit('setCity', 'Maaf jaringan anda terputus')

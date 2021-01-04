@@ -9,14 +9,6 @@ import jadwalsholat from './modules/jadwalSholat'
 Vue.use(Vuex)
 
 // eslint-disable-next-line
-const waktuSekarang = () => {
-  return new Date().getTime()
-}
-// eslint-disable-next-line
-const convertWaktu = waktu => {
-  return new Date(waktu).getTime()
-}
-// eslint-disable-next-line
 const debug = process.env.NODE_ENV !== 'production'
 
 export default new Vuex.Store(
