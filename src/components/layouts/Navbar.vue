@@ -40,16 +40,6 @@ export default {
       sepStat: 0
     }
   },
-  created () {
-    console.log('created')
-    this.getIP().then(response => {
-      if (response === 200) {
-        this.getDataJadwalsholat()
-      }
-    }).catch(error => {
-      console.log(error)
-    })
-  },
   computed: {
     ...mapState('ip', [
       'city',
@@ -65,7 +55,6 @@ export default {
   },
   methods: {
     ...mapActions('ip', [
-      'getIP',
       'getNow'
     ]),
     ...mapActions('jadwalsholat', [

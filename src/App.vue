@@ -12,6 +12,7 @@
 import Navbar from './components/layouts/Navbar'
 import Content from './components/layouts/Content'
 import Footer from './components/layouts/Footer'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -19,7 +20,35 @@ export default {
     Content,
     Footer
   },
-  name: 'App'
+  name: 'App',
+  beforeCreate () {
+    console.log('app before create')
+  },
+  created () {
+    console.log('app created')
+    this.getIP().then(response => {
+      if (response === 200) {
+        this.getDataJadwalsholat().then(response => {
+          if (response === 200) {
+            this.setDataSholatHari()
+          }
+        }).catch(error => {
+          console.log(error)
+        })
+      }
+    }).catch(error => {
+      console.log(error)
+    })
+  },
+  methods: {
+    ...mapActions('ip', [
+      'getIP'
+    ]),
+    ...mapActions('jadwalsholat', [
+      'getDataJadwalsholat',
+      'setDataSholatHari'
+    ])
+  }
 }
 </script>
 
