@@ -9,7 +9,8 @@ const state = () => ({
   jadwalSholatHari: [],
   jadwalSholatBulan: [],
   jadwalSholatBesok: [],
-  jadwalTerdekat: ''
+  jadwalTerdekat: '',
+  pesanError: ''
 })
 
 const modUnderTen = (data) => {
@@ -43,6 +44,8 @@ const actions = {
         commit('setJadwalBulan', result.data.results.datetime)
         commit('setJadwalHari', getDataJadwalsholatHari(result.data.results.datetime))
         commit('setJadwalBesok', getDataJadwalsholatBesok(result.data.results.datetime))
+      }).catch(error => {
+        commit('setPesanerror', error)
       })
   },
 
@@ -68,6 +71,9 @@ const mutations = {
   },
   setJadwalBesok (state, jadwal) {
     state.jadwalSholatBesok = jadwal
+  },
+  setPesanerror (state, pesan) {
+    state.pesanError = pesan
   }
 }
 

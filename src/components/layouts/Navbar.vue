@@ -41,6 +41,7 @@ export default {
     }
   },
   created () {
+    console.log('created')
     this.getIP().then(response => {
       if (response === 200) {
         this.getDataJadwalsholat()

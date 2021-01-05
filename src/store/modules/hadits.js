@@ -13,7 +13,7 @@ const state = () => ({
 const actions = {
   cariHadits ({commit}, keyword) {
     axios
-      .get(`http://api.alquran.cloud/v1/ayah/262`)
+      .get(`http://api.carihadis.com/?q=niat`)
       .then(result => {
         commit('setHadits', result)
       })
