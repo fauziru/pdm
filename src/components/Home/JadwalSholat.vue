@@ -10,7 +10,7 @@
         :name="item.name"
         :selected="index == 0"
       >
-        <card customClass="rounded-b-xl mt-0.5">
+        <card customClass="rounded-b-xl mt-0.5 overflow-auto">
           <keep-alive>
             <component :is="item.component" :key="item.id"></component>
           </keep-alive>

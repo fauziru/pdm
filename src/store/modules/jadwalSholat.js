@@ -16,13 +16,8 @@ const state = () => ({
   jamSholat: '',
   sisaJam: '',
   sisaMenit: '',
-  dateGregorian: '',
-  dateHijria: '',
-  Isha: '',
-  Fajr: '',
-  Dhuhr: '',
-  Asr: '',
-  Maghrib: ''
+  date: [],
+  times: []
 })
 
 const modUnderTen = (data) => {
@@ -93,13 +88,8 @@ const actions = {
   setDataSholatHari ({commit, rootState}) {
     // console.log('jadwal sholat hari ini', rootState.jadwalsholat.jadwalSholatHari[0].times)
     const data = rootState.jadwalsholat.jadwalSholatHari[0]
-    commit('setDateGregorian', data.date.gregorian)
-    commit('setDateHijria', data.date.hijri)
-    commit('setIsha', data.times.Isha)
-    commit('setFajr', data.times.Fajr)
-    commit('setDhuhr', data.times.Dhuhr)
-    commit('setAsr', data.times.Asr)
-    commit('setMaghrib', data.times.Maghrib)
+    commit('setDate', data.date)
+    commit('setTimes', data.times)
   },
 
   modMssg ({commit}, string) {
@@ -202,26 +192,11 @@ const mutations = {
   setSisamenit (state, menit) {
     state.sisaMenit = menit
   },
-  setDateGregorian (state, tanggal) {
-    state.dateGregorian = tanggal
+  setDate (state, tanggal) {
+    state.date = tanggal
   },
-  setDateHijria (state, tanggal) {
-    state.dateHijria = tanggal
-  },
-  setIsha (state, jam) {
-    state.Isha = jam
-  },
-  setFajr (state, jam) {
-    state.Fajr = jam
-  },
-  setDhuhr (state, jam) {
-    state.Dhuhr = jam
-  },
-  setAsr (state, jam) {
-    state.Asr = jam
-  },
-  setMaghrib (state, jam) {
-    state.Maghrib = jam
+  setTimes (state, jam) {
+    state.times = jam
   }
 }
 
