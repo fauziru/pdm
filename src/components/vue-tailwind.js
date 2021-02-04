@@ -44,7 +44,7 @@ const settings = {
         buttonWrapper: '',
         selectButton: 'bg-white border-gray-300',
         selectButtonLabel: '',
-        selectButtonPlaceholder: 'text-gray-400',
+        selectButtonPlaceholder: 'text-gray-700',
         selectButtonIcon: 'text-gray-600',
         selectButtonClearButton: 'hover:bg-green-100 text-gray-600',
         selectButtonClearIcon: '',

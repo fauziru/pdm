@@ -6,6 +6,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import vuetailwind from './components/vue-tailwind'
+import vuepwa from './components/vue-pwa'
 import '@/assets/styles/tailwind.css'
 
 Vue.config.productionTip = false
@@ -15,6 +16,7 @@ new Vue({
   router,
   store,
   vuetailwind,
+  vuepwa,
   components: { App },
   template: '<App/>'
 }).$mount('#app')
