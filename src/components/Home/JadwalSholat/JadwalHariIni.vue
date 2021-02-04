@@ -4,13 +4,23 @@
       <loading/>
     </div>
     <div v-if="pesanError">
-      <span>Terjadi Kesalahan, silahkan muat ulang halaman ini</span>
+      <span>{{ pesanError + ' Terjadi Kesalahan silahkan muat ulang halaman!' }}</span>
     </div>
-    <div v-if="jamSholat" >
+    <div>
       <label>Pilihan Kota: </label>
-      <select class="block w-full pl-3 pr-10 py-2 transition duration-100 ease-in-out border rounded shadow-sm focus:ring-2 focus:ring-SpringGreen-700 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed" @input="change()">
+      <t-rich-select
+        v-model="selectedKota"
+        placeholder="Pilih kota ..."
+        v-bind:options="kotas"
+        value-attribute="nama"
+        text-attribute="nama"
+        @input="change()"
+      >
+      </t-rich-select>
+      <!-- <select class="block w-full pl-3 pr-10 py-2 transition duration-100 ease-in-out border rounded shadow-sm focus:ring-2 focus:ring-SpringGreen-700 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed" @input="change()">
         <option value="0" v-bind="city">{{ city }}</option>
-      </select>
+        <option v-for="(item, index) in kota" :key="index" :value="item.id" >{{ item.nama }}</option>
+      </select> -->
     </div>
     <div class="flex mt-3" v-if="jamSholat">
       <span>Tanggal gregorian: <span class="text-SpringGreen-1300 font-bold">{{ date.gregorian }}</span></span>
@@ -37,12 +47,12 @@
         <th class="pt-3">Isya</th>
       </tr>
       <tr>
-        <td class="text-center text-RaisinBlack-900">{{ times.Imsak }}</td>
-        <td class="text-center text-RaisinBlack-900">{{ times.Fajr }}</td>
-        <td class="text-center text-RaisinBlack-900">{{ times.Dhuhr }}</td>
-        <td class="text-center text-RaisinBlack-900">{{ times.Asr }}</td>
-        <td class="text-center text-RaisinBlack-900">{{ times.Maghrib }}</td>
-        <td class="text-center text-RaisinBlack-900">{{ times.Isha }}</td>
+        <td class="text-center text-RaisinBlack-900 rounded" :class="jamSholat == times['imsak'] ? 'bg-SpringGreen-500' : '' ">{{ times.Imsak }}</td>
+        <td class="text-center text-RaisinBlack-900 rounded" :class="jamSholat == times['Fajr'] ? 'bg-SpringGreen-500' : '' ">{{ times.Fajr }}</td>
+        <td class="text-center text-RaisinBlack-900 rounded" :class="jamSholat == times['Dhuhr'] ? 'bg-SpringGreen-500' : '' ">{{ times.Dhuhr }}</td>
+        <td class="text-center text-RaisinBlack-900 rounded" :class="jamSholat == times['Asr'] ? 'bg-SpringGreen-500' : '' ">{{ times.Asr }}</td>
+        <td class="text-center text-RaisinBlack-900 rounded" :class="jamSholat == times['Maghrib'] ? 'bg-SpringGreen-500' : '' ">{{ times.Maghrib }}</td>
+        <td class="text-center text-RaisinBlack-900 rounded" :class="jamSholat == times['Isha'] ? 'bg-SpringGreen-500' : '' ">{{ times.Isha }}</td>
       </tr>
     </table>
   </div>
@@ -58,8 +68,14 @@ export default {
     card,
     loading
   },
+  data () {
+    return {
+      selectedKota: ''
+    }
+  },
   mounted () {
     setInterval(this.sholatTerdekat, 1000)
+    this.promise = true
   },
   updated () {
     console.log('update')
@@ -79,15 +95,28 @@ export default {
     ]),
     ...mapState('ip', [
       'city'
+    ]),
+    ...mapState('kota', [
+      'kotas'
     ])
   },
   methods: {
     ...mapActions('jadwalsholat', [
       'tes',
-      'sholatTerdekat'
+      'sholatTerdekat',
+      'getDataJadwalsholat',
+      'setDataSholatHari'
     ]),
     change: function () {
-      console.log('triger ganti kota')
+      console.log('ganti jadwal sholat kota ke =', this.selectedKota)
+      this.$store.commit('jadwalsholat/setJamsholat', '')
+      this.getDataJadwalsholat(this.selectedKota).then(response => {
+        if (response === 200) {
+          this.setDataSholatHari()
+        }
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 }

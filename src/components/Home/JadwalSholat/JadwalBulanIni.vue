@@ -2,13 +2,13 @@
   <div>
     <table class="w-full">
       <tr>
-        <th>Tanggal</th>
-        <th>Imsak</th>
-        <th>Subuh</th>
-        <th>Zuhur</th>
-        <th>Asar</th>
-        <th>Magrib</th>
-        <th>Isya</th>
+        <th class="sticky top-0 bg-SpringGreen-500 rounded">Tanggal</th>
+        <th class="sticky top-0 bg-SpringGreen-500 rounded">Imsak</th>
+        <th class="sticky top-0 bg-SpringGreen-500 rounded">Subuh</th>
+        <th class="sticky top-0 bg-SpringGreen-500 rounded">Zuhur</th>
+        <th class="sticky top-0 bg-SpringGreen-500 rounded">Asar</th>
+        <th class="sticky top-0 bg-SpringGreen-500 rounded">Magrib</th>
+        <th class="sticky top-0 bg-SpringGreen-500 rounded">Isya</th>
       </tr>
       <tr class="hover:bg-SpringGreen-500 h-10 border-gray-200 border-solid border-t-2" v-for="(item, index) in jadwalSholatBulan"
         :key="index" :class="item.date.gregorian == date ? 'bg-SpringGreen-700' : '' ">

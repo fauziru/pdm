@@ -12,10 +12,20 @@ const state = () => ({
 // actions
 const actions = {
   cariHadits ({commit}, keyword) {
+    const config = {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+      }
+    }
     axios
-      .get(`http://api.carihadis.com/?q=niat`)
+      .get(`hadis/?q=${keyword}`, config)
+      // .get(`/api/v1/tes1`, config)
       .then(result => {
-        commit('setHadits', result)
+        console.log('tes proxy', result)
+        // commit('setHadits', result)
       })
   }
 }

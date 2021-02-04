@@ -69,18 +69,26 @@ const getDataJadwalsholatBesok = (data) => {
 const actions = {
   getDataJadwalsholat ({commit, rootState}, lokasi) {
     return new Promise((resolve, reject) => {
+      // const config = {
+      //   headers: {
+      //     'Access-Control-Allow-Origin': '*',
+      //     'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+      //     'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+      //   }
+      // }
       axios
-        .get(`https://api.pray.zone/v2/times/this_month.json?city=${lokasi || rootState.ip.city}`)
+        .get(`https://api.pray.zone/v2/times/this_month.json?city=${lokasi || rootState.ip.city}&school=9`)
         .then(result => {
           // commit perbulan, perhari
           // console.log(result)
           commit('setJadwalBulan', result.data.results.datetime)
           commit('setJadwalHari', getDataJadwalsholatHari(result.data.results.datetime))
           commit('setJadwalBesok', getDataJadwalsholatBesok(result.data.results.datetime))
+          commit('setPesanerror', '')
           resolve(200)
         }).catch(error => {
           reject(error)
-          commit('setPesanerror', error)
+          commit('setPesanerror', 'Jadwal sholat di kota ini belum tersedia!')
         })
     })
   },

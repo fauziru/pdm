@@ -1,8 +1,8 @@
 <template>
   <div id="carihadist" class="pt-3">
     <span class="text-3xl font-semibold text-OuterSpace-900 align-middle">Coming Soon</span>
-    <!-- <input type="text" v-model="searchKey"/>
-    <mybutton class="mt-3" @click="cariHadits(searchKey)" color="secondary">Cari <i class="fas fa-search ml-1 align-middle"></i></mybutton> -->
+    <input type="text" v-model="searchKey"/>
+    <mybutton class="mt-3" @click="cariHadits(searchKey)" color="secondary">Cari <i class="fas fa-search ml-1 align-middle"></i></mybutton>
   </div>
 </template>
 
