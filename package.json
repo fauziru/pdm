@@ -1,31 +1,31 @@
 {
   "name": "pdm",
   "version": "1.0.0",
+  "private": true,
   "description": "pdm prject tes",
   "author": "fauziru <fauzirezaumr@gmail.com>",
-  "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "npm run dev",
-    "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js",
-    "deploy": "sh deploy.sh"
+    "lint": "eslint --ext .js,.vue src",
+    "deploy": "sh deploy.sh",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "start": "npm run dev"
   },
   "dependencies": {
     "axios": "^0.21.1",
     "es6-promise": "^4.2.8",
+    "register-service-worker": "^1.7.1",
     "vue": "^2.5.2",
     "vue-axios": "^3.2.4",
-    "vue-pwa-install": "^1.1.0",
     "vue-router": "^3.5.1",
     "vue-tailwind": "^2.1.1",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss7-compat": "^2.0.2",
+    "@vue/cli-plugin-pwa": "^4.5.11",
     "autoprefixer": "^9.8.6",
     "babel-core": "^6.22.1",
-    "sw-precache-webpack-plugin": "^0.11.4",
     "babel-eslint": "^8.2.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "babel-loader": "^7.1.1",
@@ -61,6 +61,7 @@
     "rimraf": "^2.6.0",
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
+    "sw-precache-webpack-plugin": "^0.11.4",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
@@ -72,13 +73,13 @@
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0"
   },
-  "engines": {
-    "node": ">= 6.0.0",
-    "npm": ">= 3.0.0"
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  }
 }
