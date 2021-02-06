@@ -25,7 +25,7 @@ const actions = {
       // .get(`/api/v1/tes1`, config)
       .then(result => {
         console.log('tes proxy', result)
-        // commit('setHadits', result)
+        commit('setHadits', result)
       })
   }
 }

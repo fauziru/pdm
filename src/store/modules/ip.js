@@ -4,6 +4,12 @@ import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios, axios)
 
+// reusable aliases for mutations
+const IP_MUTATIONS = {
+  SET_SETTING: 'SET_SETTING',
+  SET_TIME: 'SET_TIME'
+}
+
 // intial state
 const state = () => ({
   ip: '',
@@ -11,7 +17,8 @@ const state = () => ({
   date: '',
   day: '',
   hour: '',
-  minute: ''
+  minute: '',
+  isMobile: ''
 })
 
 const modUnderTen = (data) => {
@@ -25,9 +32,8 @@ const actions = {
       axios
         .get('https://ipapi.co/json/')
         .then(result => {
-          // console.log(result)
-          commit('setIP', result.data.ip)
-          commit('setCity', result.data.city)
+          const { data } = result
+          commit(IP_MUTATIONS.SET_SETTING, data)
           resolve(result.status)
         }).catch((error) => {
           reject(error)
@@ -39,31 +45,26 @@ const actions = {
   getNow  ({commit}) {
     const week = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu']
     const today = new Date()
-    commit('setDate', `${today.getFullYear()}-${modUnderTen(today.getMonth() + 1)}-${modUnderTen(today.getDate())}`)
-    commit('setDay', week[today.getDay()])
-    commit('setHour', modUnderTen(today.getHours()))
-    commit('setMinute', modUnderTen(today.getMinutes()))
+    const data = {
+      date: `${today.getFullYear()}-${modUnderTen(today.getMonth() + 1)}-${modUnderTen(today.getDate())}`,
+      day: week[today.getDay()],
+      hour: modUnderTen(today.getHours()),
+      minute: modUnderTen(today.getMinutes())
+    }
+    commit(IP_MUTATIONS.SET_TIME, data)
   }
 }
 
 // mutations
 const mutations = {
-  setIP (state, ip) {
+  [IP_MUTATIONS.SET_SETTING] (state, { ip, city }) {
     state.ip = ip
-  },
-  setCity (state, city) {
     state.city = city
   },
-  setDate (state, date) {
+  [IP_MUTATIONS.SET_TIME] (state, { date, day, hour, minute }) {
     state.date = date
-  },
-  setDay (state, day) {
     state.day = day
-  },
-  setHour (state, hour) {
     state.hour = hour
-  },
-  setMinute (state, minute) {
     state.minute = minute
   }
 }

@@ -33,7 +33,14 @@
             <i class="far fa-clock fa-4x text-SpringGreen-700 mr-1" :class="`${sisaJam || sisaMenit ? 'animate-pulse' : 'animate-bounce'}`"></i>
             <span class="text-6xl text-RaisinBlack-900 align-top">{{ jamSholat }}</span>
           </div>
-          <span class="text-xl text-OuterSpace-900" >{{ `${sisaJam || sisaMenit ? pesanSholat : 'Sudah memasuki waktu sholat '}` }}<span class="text-SpringGreen-1300 font-bold">{{ keySholat }}</span>{{ `${sisaJam || sisaMenit ? ' dalam ' : ' sekarang' }` }}<span class="text-SpringGreen-1300 font-bold">{{ `${sisaJam || ''} ${ sisaJam ? ' jam' : ''} ` }}{{ `${sisaMenit || ''} ${ sisaMenit ? ' menit' : ''} ` }}</span></span>
+          <span class="text-xl text-OuterSpace-900" >
+            {{ `${sisaJam || sisaMenit ? pesanSholat : activePesan(keySholat)}` }}
+            <span class="text-SpringGreen-1300 font-bold">
+              {{ keySholat }}</span>{{ `${sisaJam || sisaMenit ? ' dalam ' : ' sekarang' }` }}
+              <span class="text-SpringGreen-1300 font-bold">
+                {{ `${sisaJam || ''} ${ sisaJam ? ' jam' : ''} ` }}{{ `${sisaMenit || ''} ${ sisaMenit ? ' menit' : ''} ` }}
+              </span>
+            </span>
         </div>
       </card>
     </div>
@@ -118,6 +125,11 @@ export default {
     },
     activeTimes: function (jamSholat, compare) {
       return jamSholat === compare ? 'bg-SpringGreen-500' : ''
+    },
+    activePesan: function (keySholat) {
+      return ['Sunset', 'Sunrise', 'Imsak', 'Midnight'].includes(keySholat)
+        ? 'Sudah memasuki waktu sholat '
+        : 'Sudah memasuki waktu '
     }
   }
 }

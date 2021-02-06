@@ -4,6 +4,12 @@ import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios, axios)
 
+const JSSHOLAT_MUTATIONS = {
+  SET_JADWAL: 'SET_JADWAL',
+  SET_JADWAL_HARIINI: 'SET_JADWAL_HARIINI',
+  SET_TERDEKAT: 'SET_TERDEKAT'
+}
+
 // intial state
 const state = () => ({
   jadwalSholatHari: [],
@@ -69,21 +75,16 @@ const getDataJadwalsholatBesok = (data) => {
 const actions = {
   getDataJadwalsholat ({commit, rootState}, lokasi) {
     return new Promise((resolve, reject) => {
-      // const config = {
-      //   headers: {
-      //     'Access-Control-Allow-Origin': '*',
-      //     'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-      //     'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-      //   }
-      // }
       axios
         .get(`https://api.pray.zone/v2/times/this_month.json?city=${lokasi || rootState.ip.city}&school=9`)
         .then(result => {
-          // commit perbulan, perhari
-          // console.log(result)
-          commit('setJadwalBulan', result.data.results.datetime)
-          commit('setJadwalHari', getDataJadwalsholatHari(result.data.results.datetime))
-          commit('setJadwalBesok', getDataJadwalsholatBesok(result.data.results.datetime))
+          const { datetime } = result.data.results
+          const data = {
+            jadwalBulan: datetime,
+            jadwalHari: getDataJadwalsholatHari(datetime),
+            jadwalBesok: getDataJadwalsholatBesok(datetime)
+          }
+          commit(JSSHOLAT_MUTATIONS.SET_JADWAL, data)
           commit('setPesanerror', '')
           resolve(200)
         }).catch(error => {
@@ -94,56 +95,27 @@ const actions = {
   },
 
   setDataSholatHari ({commit, rootState}) {
-    // console.log('jadwal sholat hari ini', rootState.jadwalsholat.jadwalSholatHari[0].times)
-    const data = rootState.jadwalsholat.jadwalSholatHari[0]
-    commit('setDate', data.date)
-    commit('setTimes', data.times)
+    commit(JSSHOLAT_MUTATIONS.SET_JADWAL_HARIINI, rootState.jadwalsholat.jadwalSholatHari[0])
   },
 
   modMssg ({commit}, string) {
-    switch (string) {
-      case 'Sunset':
-        commit('setPesanSholat', 'Waktu ')
-        break
-      case 'Sunrise':
-        commit('setPesanSholat', 'Waktu ')
-        break
-      case 'Imsak':
-        commit('setPesanSholat', 'Waktu ')
-        break
-      case 'Midnight':
-        commit('setPesanSholat', 'Waktu ')
-        break
-      default:
-        commit('setPesanSholat', 'Waktu sholat terdekat ')
-        break
-    }
+    ['Sunset', 'Sunrise', 'Imsak', 'Midnight'].includes(string)
+      ? commit('setPesanSholat', 'Waktu ')
+      : commit('setPesanSholat', 'Waktu sholat terdekat ')
   },
 
   sholatTerdekat ({commit, rootState, dispatch}) {
     // inisiasi waktu hari ini dan waktu sholat terdekat
-    // console.log('call sholat terddekat')
     let data = rootState.jadwalsholat.jadwalSholatHari[0].times
     const today = new Date()
     const timePrayTo = today.toLocaleTimeString(('en-GB'), { hour: 'numeric', minute: 'numeric' })
-    // const timePrayTo = '04:27'
-    // console.log(timePrayTo)
-    // console.log('data besok', this.jadwalSholatBesok[0].times)
     let key = Object.keys(data).sort((a, b) => parseFloat(data[a]) - parseFloat(data[b])).filter(prop => data[prop] >= timePrayTo)
-    // let key = Object.getOwnPropertyNames(data).filter(prop => data[prop] >= timePrayTo)
-    // console.log(data)
-    // console.log('key', key)
-    // console.log('key sorted', dataSorted)
+
     if (key.length === 0) {
-      // console.log('tes kosong')
       data = rootState.jadwalsholat.jadwalSholatBesok[0].times
       key = Object.keys(data).sort((a, b) => parseFloat(data[a]) - parseFloat(data[b])).filter(prop => data[prop] >= '00:00')
-      // console.log('tes key', key)
     }
     dispatch('modMssg', key[0])
-    commit('setKey', modKey(key[0]))
-    commit('setJamsholat', data[key[0]])
-    // console.log('jam sholat', this.jamSholat)
 
     // kalkulasi sisa waktu
     let time1 = data[key[0]].split(':')
@@ -153,9 +125,14 @@ const actions = {
     let diff = d1 - d2
     let jamSisa = Math.floor(diff / 60) + (diff < 0 ? 24 : 0)
     let menitSisa = diff - ((jamSisa - (diff < 0 ? 24 : 0)) * 60)
-    // console.log(jamSisa, diff)
-    commit('setSisajam', jamSisa)
-    commit('setSisamenit', menitSisa)
+
+    const result = {
+      key: modKey(key[0]),
+      jamSholat: data[key[0]],
+      sisaJam: jamSisa,
+      sisaMenit: menitSisa
+    }
+    commit(JSSHOLAT_MUTATIONS.SET_TERDEKAT, result)
     // jika sudah masuk jam sholat umpan sweet alert dan bounce animasi jam
   },
 
@@ -170,41 +147,26 @@ const getters = {
 
 // mutations
 const mutations = {
-  setJadwalHari (state, jadwal) {
-    state.jadwalSholatHari = jadwal
+  [JSSHOLAT_MUTATIONS.SET_JADWAL] (state, { jadwalHari, jadwalBulan, jadwalBesok }) {
+    state.jadwalSholatHari = jadwalHari
+    state.jadwalSholatBulan = jadwalBulan
+    state.jadwalSholatBesok = jadwalBesok
   },
-  setJadwalBulan (state, jadwal) {
-    state.jadwalSholatBulan = jadwal
+  [JSSHOLAT_MUTATIONS.SET_JADWAL_HARIINI] (state, { date, times }) {
+    state.date = date
+    state.times = times
   },
-  setJadwalTerdekat (state, jadwal) {
-    state.jadwalTerdekat = jadwal
-  },
-  setJadwalBesok (state, jadwal) {
-    state.jadwalSholatBesok = jadwal
+  [JSSHOLAT_MUTATIONS.SET_TERDEKAT] (state, { key, jamSholat, sisaJam, sisaMenit }) {
+    state.keySholat = key
+    state.jamSholat = jamSholat
+    state.sisaJam = sisaJam
+    state.sisaMenit = sisaMenit
   },
   setPesanerror (state, pesan) {
     state.pesanError = pesan
   },
   setPesanSholat (state, pesan) {
     state.pesanSholat = pesan
-  },
-  setKey (state, key) {
-    state.keySholat = key
-  },
-  setJamsholat (state, jam) {
-    state.jamSholat = jam
-  },
-  setSisajam (state, jam) {
-    state.sisaJam = jam
-  },
-  setSisamenit (state, menit) {
-    state.sisaMenit = menit
-  },
-  setDate (state, tanggal) {
-    state.date = tanggal
-  },
-  setTimes (state, jam) {
-    state.times = jam
   }
 }
 

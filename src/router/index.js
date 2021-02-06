@@ -5,7 +5,7 @@ import Home from '../components/Home/Home'
 Vue.use(Router)
 
 export default new Router({
-  base: '/pdm',
+  base: '/',
   mode: 'history',
   routes: [
     {
