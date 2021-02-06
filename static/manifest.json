@@ -1,6 +1,6 @@
 {
-  "name": "pmd",
-  "short_name": "pmd",
+  "name": "PMD",
+  "short_name": "PMD",
   "icons": [
     {
       "src": "/pdm/static/img/icons/android-chrome-192x192.png",
@@ -15,8 +15,8 @@
       "purpose": "any maskable"
     }
   ],
-  "start_url": "/pdm/index.html",
+  "start_url": "/pdm",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "background_color": "#294851",
+  "theme_color": "#18dc60"
 }
