@@ -47,12 +47,12 @@
         <th class="pt-3">Isya</th>
       </tr>
       <tr>
-        <td class="text-center text-RaisinBlack-900 rounded" :class="jamSholat == times['imsak'] ? 'bg-SpringGreen-500' : '' ">{{ times.Imsak }}</td>
-        <td class="text-center text-RaisinBlack-900 rounded" :class="jamSholat == times['Fajr'] ? 'bg-SpringGreen-500' : '' ">{{ times.Fajr }}</td>
-        <td class="text-center text-RaisinBlack-900 rounded" :class="jamSholat == times['Dhuhr'] ? 'bg-SpringGreen-500' : '' ">{{ times.Dhuhr }}</td>
-        <td class="text-center text-RaisinBlack-900 rounded" :class="jamSholat == times['Asr'] ? 'bg-SpringGreen-500' : '' ">{{ times.Asr }}</td>
-        <td class="text-center text-RaisinBlack-900 rounded" :class="jamSholat == times['Maghrib'] ? 'bg-SpringGreen-500' : '' ">{{ times.Maghrib }}</td>
-        <td class="text-center text-RaisinBlack-900 rounded" :class="jamSholat == times['Isha'] ? 'bg-SpringGreen-500' : '' ">{{ times.Isha }}</td>
+        <td class="text-center text-RaisinBlack-900 rounded" :class="activeTimes(jamSholat, times['Imsak'])">{{ times.Imsak }}</td>
+        <td class="text-center text-RaisinBlack-900 rounded" :class="activeTimes(jamSholat, times['Fajr'])">{{ times.Fajr }}</td>
+        <td class="text-center text-RaisinBlack-900 rounded" :class="activeTimes(jamSholat, times['Dhuhr'])">{{ times.Dhuhr }}</td>
+        <td class="text-center text-RaisinBlack-900 rounded" :class="activeTimes(jamSholat, times['Asr'])">{{ times.Asr }}</td>
+        <td class="text-center text-RaisinBlack-900 rounded" :class="activeTimes(jamSholat, times['Maghrib'])">{{ times.Maghrib }}</td>
+        <td class="text-center text-RaisinBlack-900 rounded" :class="activeTimes(jamSholat, times['Isha'])">{{ times.Isha }}</td>
       </tr>
     </table>
   </div>
@@ -111,12 +111,13 @@ export default {
       console.log('ganti jadwal sholat kota ke =', this.selectedKota)
       this.$store.commit('jadwalsholat/setJamsholat', '')
       this.getDataJadwalsholat(this.selectedKota).then(response => {
-        if (response === 200) {
-          this.setDataSholatHari()
-        }
+        if (response === 200) this.setDataSholatHari()
       }).catch(error => {
         console.log(error)
       })
+    },
+    activeTimes: function (jamSholat, compare) {
+      return jamSholat === compare ? 'bg-SpringGreen-500' : ''
     }
   }
 }
