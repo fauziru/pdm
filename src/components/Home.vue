@@ -9,9 +9,9 @@
       >
         <card customClass="rounded-b-xl mt-0.5">
           <span class="text-2xl">{{ item.name }}</span>
-            <keep-alive>
-              <component :is="item.component" :key="item.id"></component>
-            </keep-alive>
+          <keep-alive>
+            <component :is="item.component" :key="item.id"></component>
+          </keep-alive>
         </card>
       </tab>
     </tabs>
@@ -19,13 +19,13 @@
 </template>
 
 <script>
-import Tab from '../_partials/Tab'
-import Tabs from '../_partials/Tabs'
-import Loader from '../_partials/LoaderSpinner'
-import Card from '../_partials/Card'
-import JadwalSholat from './JadwalSholat'
-import CariHadits from './CariHadits'
-import Dzikir from './Dzikir'
+import Tab from './_partials/Tab'
+import Tabs from './_partials/Tabs'
+import Loader from './_partials/LoaderSpinner'
+import Card from './_partials/Card'
+import JadwalSholat from './Home/JadwalSholat'
+import CariHadits from './Home/CariHadits'
+import Dzikir from './Home/Dzikir'
 
 export default {
   components: {

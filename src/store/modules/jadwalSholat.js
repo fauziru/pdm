@@ -23,7 +23,8 @@ const state = () => ({
   sisaJam: '',
   sisaMenit: '',
   date: [],
-  times: []
+  times: [],
+  loadSholat: true
 })
 
 const modUnderTen = (data) => {
@@ -133,6 +134,7 @@ const actions = {
       sisaMenit: menitSisa
     }
     commit(JSSHOLAT_MUTATIONS.SET_TERDEKAT, result)
+    commit('setLoad', false)
     // jika sudah masuk jam sholat umpan sweet alert dan bounce animasi jam
   },
 
@@ -167,6 +169,9 @@ const mutations = {
   },
   setPesanSholat (state, pesan) {
     state.pesanSholat = pesan
+  },
+  setLoad (state, bool) {
+    state.loadSholat = bool
   }
 }
 

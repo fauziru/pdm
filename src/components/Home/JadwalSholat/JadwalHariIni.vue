@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex justify-center" v-if="!jamSholat">
+    <div class="flex justify-center" v-if="loadSholat">
       <loading/>
     </div>
     <div v-if="pesanError">
@@ -22,11 +22,11 @@
         <option v-for="(item, index) in kota" :key="index" :value="item.id" >{{ item.nama }}</option>
       </select> -->
     </div>
-    <div class="flex mt-3" v-if="jamSholat">
-      <span>Tanggal gregorian: <span class="text-OuterSpace-900 font-bold">{{ date.gregorian }}</span></span>
-      <span class="ml-2">Tanggal hijriah: <span class="text-OuterSpace-900 font-bold">{{ date.hijri }}</span></span>
+    <div class="flex mt-3" v-if="!loadSholat">
+      <span>Tanggal gregorian: <span class="text-SpringGreen-1300 font-bold">{{ date.gregorian }}</span></span>
+      <span class="ml-2">Tanggal hijriah: <span class="text-SpringGreen-1300 font-bold">{{ date.hijri }}</span></span>
     </div>
-    <div v-if="jamSholat">
+    <div v-if="!loadSholat">
       <card customClass="rounded-xl mx-auto mt-3 border-gray-100 border-t-2 border-solid" width="md:w-3/5" bg="bg-gradient-to-tl from-Cultured-1000 via-Cultured-900 to-Cultured-900">
         <div class="grid justify-center">
           <div class="text-center">
@@ -44,7 +44,7 @@
         </div>
       </card>
     </div>
-    <table v-if="jamSholat" class="w-full mt-5 border-gray-200 border-solid border-t-2">
+    <table v-if="!loadSholat" class="w-full mt-5 border-gray-200 border-solid border-t-2">
       <tr>
         <th class="pt-3">Imsak</th>
         <th class="pt-3">Subuh</th>
@@ -98,7 +98,8 @@ export default {
       'sisaJam',
       'sisaMenit',
       'date',
-      'times'
+      'times',
+      'loadSholat'
     ]),
     ...mapState('ip', [
       'city'
@@ -116,7 +117,7 @@ export default {
     ]),
     change: function () {
       console.log('ganti jadwal sholat kota ke =', this.selectedKota)
-      this.$store.commit('jadwalsholat/setJamsholat', '')
+      this.$store.commit('jadwalsholat/setLoad', true)
       this.getDataJadwalsholat(this.selectedKota).then(response => {
         if (response === 200) this.setDataSholatHari()
       }).catch(error => {

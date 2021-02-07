@@ -13,6 +13,13 @@
           <div class="row-span-1">
             <span class="text-lg text-OuterSpace-900 align-middle">{{ `${day}, ${date}` }}</span>
           </div>
+          <div v-if="!isMobile" class="row-span-1">
+            <router-link
+              v-for="(item, index) in menuBottombar"
+              :key="index"
+              :to="item.link"
+            >{{ item.text }}</router-link>
+          </div>
           <div class="text-6xl text-RaisinBlack-900 align-middle justify-self-end row-span-2">
             {{ hour }}<span :class="sepStat ? 'text-SpringGreen-900' : 'text-Cultured-900' " >:</span>{{ minute }}
           </div>
@@ -47,6 +54,12 @@ export default {
       'day',
       'hour',
       'minute'
+    ]),
+    ...mapState('menu', [
+      'menuBottombar'
+    ]),
+    ...mapState('utl', [
+      'isMobile'
     ])
   },
   mounted () {

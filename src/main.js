@@ -8,6 +8,7 @@ import store from './store'
 import vuetailwind from './components/vue-tailwind'
 import '@/assets/styles/tailwind.css'
 import './registerServiceWorker'
+import './assets/styles/main.css'
 
 Vue.config.productionTip = false
 

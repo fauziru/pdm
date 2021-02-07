@@ -2,9 +2,12 @@
   <div id="app">
     <Navbar/>
     <Content>
-      <router-view/>
+      <transition name="fade">
+        <router-view/>
+      </transition>
     </Content>
     <Footer/>
+    <BottomBar v-if="isMobile"/>
   </div>
 </template>
 
@@ -12,13 +15,15 @@
 import Navbar from './components/layouts/Navbar'
 import Content from './components/layouts/Content'
 import Footer from './components/layouts/Footer'
-import { mapActions } from 'vuex'
+import BottomBar from './components/layouts/Bottombar'
+import { mapActions, mapState, mapMutations } from 'vuex'
 
 export default {
   components: {
     Navbar,
     Content,
-    Footer
+    Footer,
+    BottomBar
   },
   name: 'App',
   beforeCreate () {
@@ -40,6 +45,20 @@ export default {
       console.log(error)
     })
   },
+  computed: {
+    ...mapState('utl', [
+      'isMobile'
+    ])
+  },
+  beforeDestroy () {
+    if (typeof window === 'undefined') {
+      return window.removeEventListener('resize', this.onResize, { passive: true })
+    }
+  },
+  mounted () {
+    this.onResize()
+    window.addEventListener('resize', this.onResize, { passive: true })
+  },
   methods: {
     ...mapActions('ip', [
       'getIP'
@@ -47,7 +66,13 @@ export default {
     ...mapActions('jadwalsholat', [
       'getDataJadwalsholat',
       'setDataSholatHari'
-    ])
+    ]),
+    ...mapMutations('utl', [
+      'setIsmobile'
+    ]),
+    onResize () {
+      this.setIsmobile(window.innerWidth < 600)
+    }
   }
 }
 </script>
@@ -58,5 +83,28 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+
+.slither-enter-active, .slither-leave-active {
+  transition: transform 0.3s;
+}
+.slither-enter, .slither-leave-to {
+  transform: translateX(-100%);
+}
+.slither-enter-to, .slither-leave {
+  transform: translateX(0);
+}
+
+.fade-enter-active {
+  @apply transition ease-out duration-300 transform opacity-0 scale-95;
+}
+.fade-enter-to {
+  @apply transform opacity-100 scale-100;
+}
+.fade-leave {
+  @apply transition ease-in transform opacity-100 scale-100;
+}
+.fade-leave-to {
+  @apply transform opacity-0 scale-95 duration-75;
 }
 </style>

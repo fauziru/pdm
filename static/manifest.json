@@ -1,6 +1,7 @@
 {
   "name": "PMD",
   "short_name": "PMD",
+  "description": "Web Aplikasi seputar jadwal sholat, penghitung dzikir, dan pencarian hadis",
   "icons": [
     {
       "src": "/static/img/icons/android-chrome-192x192.png",
@@ -15,7 +16,7 @@
       "purpose": "any maskable"
     }
   ],
-  "start_url": "/",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#294851",
   "theme_color": "#32E875",

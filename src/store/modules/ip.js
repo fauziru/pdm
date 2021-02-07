@@ -17,8 +17,7 @@ const state = () => ({
   date: '',
   day: '',
   hour: '',
-  minute: '',
-  isMobile: ''
+  minute: ''
 })
 
 const modUnderTen = (data) => {

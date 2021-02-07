@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <table class="w-full -ml-7 sm:-ml-0">
+  <div class="">
+    <table class="w-full -ml-5 sm:-ml-0">
       <tr>
         <th class="sticky top-0 bg-SpringGreen-500 rounded">Tanggal</th>
         <th class="sticky top-0 bg-SpringGreen-500 rounded">Imsak</th>

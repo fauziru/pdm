@@ -5,7 +5,9 @@ import Vuex, { createLogger } from 'vuex'
 import ip from './modules/ip'
 import hadits from './modules/hadits'
 import jadwalsholat from './modules/jadwalSholat'
+import menu from './modules/menu'
 import kota from './modules/kota'
+import utl from './modules/utl'
 
 Vue.use(Vuex)
 
@@ -18,7 +20,9 @@ export default new Vuex.Store(
       ip,
       hadits,
       jadwalsholat,
-      kota
+      kota,
+      menu,
+      utl
     }
     // strict: debug,
     // plugins: debug ? [createLogger()] : []
