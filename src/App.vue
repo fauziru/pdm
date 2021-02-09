@@ -1,5 +1,12 @@
 <template>
   <div id="app">
+    <t-alert
+      v-if="updateExists"
+      variant="error"
+      dismissible= false
+    >
+      <button @click="refreshApp"> Update</button>
+    </t-alert>
     <Navbar/>
     <Content>
       <transition name="fade">
@@ -17,7 +24,7 @@ import Content from './components/layouts/Content'
 import Footer from './components/layouts/Footer'
 import BottomBar from './components/layouts/Bottombar'
 import { mapActions, mapState, mapMutations } from 'vuex'
-
+import updateSw from './mixins/updateSw'
 export default {
   components: {
     Navbar,
@@ -26,6 +33,7 @@ export default {
     BottomBar
   },
   name: 'App',
+  mixins: [updateSw],
   beforeCreate () {
     console.log('app before create')
   },
@@ -96,7 +104,7 @@ export default {
 }
 
 .fade-enter-active {
-  @apply transition ease-out duration-300 transform opacity-0 scale-95;
+  @apply transition ease-out duration-100 transform opacity-0 scale-95;
 }
 .fade-enter-to {
   @apply transform opacity-100 scale-100;
@@ -105,6 +113,6 @@ export default {
   @apply transition ease-in transform opacity-100 scale-100;
 }
 .fade-leave-to {
-  @apply transform opacity-0 scale-95 duration-75;
+  @apply transform opacity-0 scale-95 duration-100;
 }
 </style>

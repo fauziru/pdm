@@ -22,11 +22,11 @@
         <option v-for="(item, index) in kota" :key="index" :value="item.id" >{{ item.nama }}</option>
       </select> -->
     </div>
-    <div class="flex mt-3" v-if="!loadSholat">
+    <div class="flex mt-3 px-5 md:px-0" v-if="!loadSholat">
       <span>Tanggal gregorian: <span class="text-SpringGreen-1300 font-bold">{{ date.gregorian }}</span></span>
       <span class="ml-2">Tanggal hijriah: <span class="text-SpringGreen-1300 font-bold">{{ date.hijri }}</span></span>
     </div>
-    <div v-if="!loadSholat">
+    <div class="px-5 md:px-0" v-if="!loadSholat">
       <card customClass="rounded-xl mx-auto mt-3 border-gray-100 border-t-2 border-solid" width="md:w-3/5" bg="bg-gradient-to-tl from-Cultured-1000 via-Cultured-900 to-Cultured-900">
         <div class="grid justify-center">
           <div class="text-center">

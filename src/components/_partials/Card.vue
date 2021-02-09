@@ -1,5 +1,5 @@
 <template>
-  <div class="card shadow-lg border-gray-200 px-5 py-3 overflow-visible" :class="`${customClass} ${width || 'w-full'} ${height || 'h-auto'} ${bg || 'bg-Cultured-900'}`">
+  <div class="card shadow-lg border-gray-200 px-2 md:px-5 py-3 overflow-visible" :class="`${customClass} ${width || 'w-full'} ${height || 'h-auto'} ${bg || 'bg-Cultured-900'}`">
     <slot></slot>
   </div>
 </template>

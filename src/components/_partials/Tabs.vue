@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="bg-Cultured-900 pt-2 shadow-md rounded-t-xl px-5">
+    <nav class="bg-Cultured-900 pt-2 shadow-md rounded-t-xl md:px-5">
       <div class="-mb-px flex">
         <a v-for="tab in tabs"
         class="no-underline border-transparent uppercase tracking-wide font-bold text-xs py-3 px-2 rounded-t-md"

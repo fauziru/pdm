@@ -2,7 +2,7 @@
   <div id="footer">
     <div class="bg-wave-sm md:bg-wave h-64"></div>
     <Wrapper customClass="z-50">
-      <div class="rounded-t-lg -mt-32 bg-gradient-to-br from-OuterSpace-900 via-OuterSpace-900 to-RaisinBlack-900 shadow-lg py-3 px-5 cheight">
+      <div class="rounded-t-lg -mt-32 bg-gradient-to-br from-OuterSpace-900 via-OuterSpace-900 to-RaisinBlack-900 shadow-lg py-3 px-2 md:px-5 cheight">
         <p class="text-Cultured-900">&copy; {{ year }}. Padjadjaran Master Developer</p>
       </div>
     </Wrapper>
