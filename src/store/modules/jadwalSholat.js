@@ -31,6 +31,11 @@ const modUnderTen = (data) => {
   return data < 10 ? `0${data}` : data
 }
 
+const getHourNumber = (data) => {
+  let arrayHour = data.split(':')
+  return parseInt(arrayHour[0]) * 60 + parseInt(arrayHour[1])
+}
+
 const modKey = (string) => {
   switch (string) {
     case 'Sunset':
@@ -110,8 +115,13 @@ const actions = {
     let data = rootState.jadwalsholat.jadwalSholatHari[0].times
     const today = new Date()
     const timePrayTo = today.toLocaleTimeString(('en-GB'), { hour: 'numeric', minute: 'numeric' })
-    let key = Object.keys(data).sort((a, b) => parseFloat(data[a]) - parseFloat(data[b])).filter(prop => data[prop] >= timePrayTo)
+    // const timePrayTo = '18:17' // untuk debuging dan testing
+    let key = Object.keys(data).sort((a, b) => getHourNumber(data[a]) - getHourNumber(data[b])).filter(prop => data[prop] >= timePrayTo)
+    console.log('waktu sholat hari', key)
+    console.log('waktu sholat hari', data)
+    console.log('parse int', getHourNumber(timePrayTo))
 
+    // jika waktu menunjukan tengah malam
     if (key.length === 0) {
       data = rootState.jadwalsholat.jadwalSholatBesok[0].times
       key = Object.keys(data).sort((a, b) => parseFloat(data[a]) - parseFloat(data[b])).filter(prop => data[prop] >= '00:00')
@@ -119,11 +129,7 @@ const actions = {
     dispatch('modMssg', key[0])
 
     // kalkulasi sisa waktu
-    let time1 = data[key[0]].split(':')
-    let time2 = timePrayTo.split(':')
-    let d1 = parseInt(time1[0]) * 60 + parseInt(time1[1])
-    let d2 = parseInt(time2[0]) * 60 + parseInt(time2[1])
-    let diff = d1 - d2
+    let diff = getHourNumber(data[key[0]]) - getHourNumber(timePrayTo)
     let jamSisa = Math.floor(diff / 60) + (diff < 0 ? 24 : 0)
     let menitSisa = diff - ((jamSisa - (diff < 0 ? 24 : 0)) * 60)
 
@@ -133,6 +139,8 @@ const actions = {
       sisaJam: jamSisa,
       sisaMenit: menitSisa
     }
+
+    // store data
     commit(JSSHOLAT_MUTATIONS.SET_TERDEKAT, result)
     commit('setLoad', false)
     // jika sudah masuk jam sholat umpan sweet alert dan bounce animasi jam
