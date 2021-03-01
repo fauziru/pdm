@@ -6,6 +6,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import vuetailwind from './components/vue-tailwind'
+// import vuestar from './components/vue-star'
 import '@/assets/styles/tailwind.css'
 import './registerServiceWorker'
 import './assets/styles/main.css'
@@ -17,6 +18,7 @@ new Vue({
   router,
   store,
   vuetailwind,
+  // vuestar,
   components: { App },
   template: '<App/>'
 }).$mount('#app')

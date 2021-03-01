@@ -117,9 +117,6 @@ const actions = {
     const timePrayTo = today.toLocaleTimeString(('en-GB'), { hour: 'numeric', minute: 'numeric' })
     // const timePrayTo = '18:17' // untuk debuging dan testing
     let key = Object.keys(data).sort((a, b) => getHourNumber(data[a]) - getHourNumber(data[b])).filter(prop => data[prop] >= timePrayTo)
-    console.log('waktu sholat hari', key)
-    console.log('waktu sholat hari', data)
-    console.log('parse int', getHourNumber(timePrayTo))
 
     // jika waktu menunjukan tengah malam
     if (key.length === 0) {

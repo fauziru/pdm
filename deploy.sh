@@ -4,7 +4,7 @@ set -e
 # build
 # navigate into the build output directory
 npm run build
-# npx workbox generateSW workbox-config.js
+npx workbox generateSW workbox-config.js
 # npx workbox injectManifest workbox-config.js
 firebase deploy --only hosting
 # cd dist

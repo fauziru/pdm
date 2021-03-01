@@ -46,20 +46,10 @@
     </div>
     <table v-if="!loadSholat" class="w-full mt-5 border-gray-200 border-solid border-t-2">
       <tr>
-        <th class="pt-3">Imsak</th>
-        <th class="pt-3">Subuh</th>
-        <th class="pt-3">Zuhur</th>
-        <th class="pt-3">Asar</th>
-        <th class="pt-3">Magrib</th>
-        <th class="pt-3">Isya</th>
+        <th v-for="(item, index) in keyPray" :key="index" class="pt-3">{{ item.id }}</th>
       </tr>
       <tr>
-        <td class="text-center text-RaisinBlack-900 rounded" :class="activeTimes(jamSholat, times['Imsak'])">{{ times.Imsak }}</td>
-        <td class="text-center text-RaisinBlack-900 rounded" :class="activeTimes(jamSholat, times['Fajr'])">{{ times.Fajr }}</td>
-        <td class="text-center text-RaisinBlack-900 rounded" :class="activeTimes(jamSholat, times['Dhuhr'])">{{ times.Dhuhr }}</td>
-        <td class="text-center text-RaisinBlack-900 rounded" :class="activeTimes(jamSholat, times['Asr'])">{{ times.Asr }}</td>
-        <td class="text-center text-RaisinBlack-900 rounded" :class="activeTimes(jamSholat, times['Maghrib'])">{{ times.Maghrib }}</td>
-        <td class="text-center text-RaisinBlack-900 rounded" :class="activeTimes(jamSholat, times['Isha'])">{{ times.Isha }}</td>
+        <td v-for="(item, index) in keyPray" :key="index" class="text-center text-RaisinBlack-900 rounded" :class="activeTimes(jamSholat, times[item.en])">{{ times[item.en] }}</td>
       </tr>
     </table>
   </div>
@@ -106,6 +96,9 @@ export default {
     ]),
     ...mapState('kota', [
       'kotas'
+    ]),
+    ...mapState('menu', [
+      'keyPray'
     ])
   },
   methods: {

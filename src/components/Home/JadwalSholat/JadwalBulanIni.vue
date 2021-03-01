@@ -3,22 +3,28 @@
     <table class="w-full">
       <tr>
         <th class="sticky top-0 bg-SpringGreen-500 rounded">Tanggal</th>
-        <th class="sticky top-0 bg-SpringGreen-500 rounded">Imsak</th>
-        <th class="sticky top-0 bg-SpringGreen-500 rounded">Subuh</th>
-        <th class="sticky top-0 bg-SpringGreen-500 rounded">Zuhur</th>
-        <th class="sticky top-0 bg-SpringGreen-500 rounded">Asar</th>
-        <th class="sticky top-0 bg-SpringGreen-500 rounded">Magrib</th>
-        <th class="sticky top-0 bg-SpringGreen-500 rounded">Isya</th>
+        <th v-for="(item, index) in keyPray" :key="index" class="sticky top-0 bg-SpringGreen-500 rounded">{{ item.id }}</th>
       </tr>
       <tr class="hover:bg-SpringGreen-500 h-10 border-gray-200 border-solid border-t-2" v-for="(item, index) in jadwalSholatBulan"
         :key="index" :class="item.date.gregorian == date ? 'bg-SpringGreen-700' : '' ">
-        <td class="text-center text-RaisinBlack-900">{{ item.date.gregorian }}</td>
-        <td class="text-center text-RaisinBlack-900">{{ item.times.Imsak }}</td>
-        <td class="text-center text-RaisinBlack-900">{{ item.times.Fajr }}</td>
-        <td class="text-center text-RaisinBlack-900">{{ item.times.Dhuhr }}</td>
-        <td class="text-center text-RaisinBlack-900">{{ item.times.Asr }}</td>
-        <td class="text-center text-RaisinBlack-900">{{ item.times.Maghrib }}</td>
-        <td class="text-center text-RaisinBlack-900">{{ item.times.Isha }}</td>
+        <td class="text-center text-RaisinBlack-900">
+          <t-dropdown
+            variant="tooltip"
+            toggle-on-hover
+          >
+            <span
+              slot="trigger"
+              class="text-RaisinBlack-900"
+            >
+              {{ item.date.gregorian }}
+            </span>
+
+            <template>
+              {{ item.date.hijri }}
+            </template>
+          </t-dropdown>
+        </td>
+        <td v-for="(itemKey, index) in keyPray" :key="index" class="text-center text-RaisinBlack-900">{{ item.times[itemKey.en] }}</td>
       </tr>
     </table>
   </div>
@@ -28,13 +34,15 @@
 import { mapState } from 'vuex'
 
 export default {
-
   computed: {
     ...mapState('jadwalsholat', [
       'jadwalSholatBulan'
     ]),
     ...mapState('ip', [
       'date'
+    ]),
+    ...mapState('menu', [
+      'keyPray'
     ])
   }
 }
