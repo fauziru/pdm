@@ -20,7 +20,9 @@
             </span>
 
             <template>
-              {{ item.date.hijri }}
+              <div class="text-center w-24">
+                {{ item.date.hijri }}
+              </div>
             </template>
           </t-dropdown>
         </td>

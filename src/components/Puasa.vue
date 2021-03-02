@@ -13,12 +13,27 @@
               <i
                 class="fas fa-star-and-crescent fa-4x text-SpringGreen-700 mr-1"
               ></i>
-              <span class="text-6xl text-RaisinBlack-900 align-top">{{ ramadhan }}</span>
+              <span class="text-6xl text-RaisinBlack-900 align-top">
+                {{ ramadhan }}
+              </span>
             </div>
             <span class="text-xl text-OuterSpace-900">
-              <span class="text-SpringGreen-1300 font-bold">{{ ramadhan == 1 ? 'Besok' : 'Hari' }}</span>
+              <span class="text-SpringGreen-1300 font-bold">
+                {{ ramadhan == 1 ? "Besok" : "Hari" }}
+              </span>
               Menuju
-              <span class="text-SpringGreen-1300 font-bold">Bulan Ramadhan</span>
+              <span class="text-OuterSpace-900 font-bold text-center">
+                <t-dropdown variant="tooltip" toggle-on-hover>
+                  <span slot="trigger" class="text-SpringGreen-1300 font-bold">
+                    Bulan Ramadhan
+                  </span>
+                  <template>
+                    <div class="text-center px-3">
+                      Senin, 12 April
+                    </div>
+                  </template>
+                </t-dropdown>
+              </span>
             </span>
           </div>
         </card>
